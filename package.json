@@ -1,0 +1,63 @@
+{
+  "name": "v-datepicker",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "A Vue 3 datepicker component",
+  "packageManager": "pnpm@10.13.1",
+  "author": "Anja Rupnik",
+  "license": "MIT",
+  "repository": "anjarupnik/v-datepicker",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "src",
+    "dist",
+    "!src/**/*.story.vue",
+    "!src/**/*.test.*",
+    "!src/**/_*.vue",
+    "!src/**/stories",
+    "!src/**/story"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --fix",
+    "format": "prettier --write \"src/**/*.{js,ts,vue,css,scss}\""
+  },
+  "keywords": [
+    "vue",
+    "datepicker"
+  ],
+  "peerDependencies": {
+    "vue": ">= 3.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.1.0",
+    "@typescript-eslint/eslint-plugin": "8.52.0 ",
+    "@typescript-eslint/parser": "8.52.0",
+    "@vitejs/plugin-vue": "6.0.3",
+    "@vue/eslint-config-prettier": "10.2.0",
+    "@vue/eslint-config-typescript": "14.6.0",
+    "@vue/tsconfig": "0.8.1",
+    "eslint": "9.39.2",
+    "eslint-plugin-vue": "10.6.2",
+    "prettier": "3.7.4",
+    "typescript": "5.9.3",
+    "vite": "7.3.1",
+    "vite-plugin-dts": "^4.5.4",
+    "vue": "3.5.26",
+    "vue-tsc": "3.2.2"
+  },
+  "volta": {
+    "node": "24.12.0"
+  }
+}
