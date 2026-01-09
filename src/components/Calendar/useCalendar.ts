@@ -366,6 +366,61 @@ export function useCalendar(props: UseCalendarProps) {
     return content;
   });
 
+  // TODO: rewrite (a lot of duplication)
+  const currentMonth = computed(() => {
+    if (!grid.value.length) return "";
+
+    if (props.locale.value !== formatter.getLocale())
+      formatter.setLocale(props.locale.value);
+
+    const date = grid.value[0]?.value;
+
+    if (date) {
+      return `${formatter.fullMonth(toDate(date), headingFormatOptions.value)}`;
+    }
+
+    return "";
+  });
+
+  const currentYear = computed(() => {
+    if (!grid.value.length) return "";
+
+    if (props.locale.value !== formatter.getLocale())
+      formatter.setLocale(props.locale.value);
+
+    const date = grid.value[0]?.value;
+
+    if (date) {
+      return `${formatter.fullYear(toDate(date), headingFormatOptions.value)}`;
+    }
+
+    return "";
+  });
+
+  // TODO: look if there is a better way to create months with locale month name
+  const months = computed(() => {
+    const monthsArray = createMonths({
+      dateObj: props.placeholder.value,
+      weekStartsOn: props.weekStartsOn.value,
+      locale: props.locale.value,
+      fixedWeeks: props.fixedWeeks.value,
+      numberOfMonths: 12,
+    });
+
+    return monthsArray.map((month) => {
+      const date = month.value.copy() as DateValue & { monthName: string };
+      date.monthName = `${formatter.fullMonth(toDate(date), headingFormatOptions.value)}`;
+      return date;
+    });
+  });
+
+  // TODO: add min and max for years and maybe we should switch to date object here as well for consistency
+  const years = computed(() => {
+    return Array.from({ length: 2100 - 1875 + 1 }, (_, i) => ({
+      year: 1875 + i,
+    }));
+  });
+
   const fullCalendarLabel = computed(
     () => `${props.calendarLabel.value ?? "Event Date"}, ${headingValue.value}`,
   );
@@ -383,6 +438,10 @@ export function useCalendar(props: UseCalendarProps) {
     nextPage,
     prevPage,
     headingValue,
+    currentMonth,
+    currentYear,
     fullCalendarLabel,
+    months,
+    years,
   };
 }

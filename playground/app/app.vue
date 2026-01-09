@@ -1,6 +1,10 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { Icon } from "@iconify/vue";
 import { DatePicker } from "v-datepicker";
+import { CalendarDate, type DateValue } from "@internationalized/date";
+
+// const date = ref<DateValue | undefined>(new CalendarDate(1992, 6, 12));
 </script>
 
 <template>
@@ -11,17 +15,18 @@ import { DatePicker } from "v-datepicker";
       </h1>
 
       <div class="space-y-4">
-        <label class="block text-sm font-medium text-gray-700">
+        <label class="block text-sm font-medium text-gray-700" for="birthday">
           Select a date
         </label>
         <div class="flex flex-col gap-2">
           <DatePicker.Root
             id="birthday"
             :is-date-unavailable="(date) => date.day === 19"
+            locale="nl"
           >
             <DatePicker.Field
               v-slot="{ segments }"
-              class="w-36 flex select-none bg-white items-center rounded-lg shadow-sm text-center justify-between text-green10 border p-1 data-[invalid]:border-red-500"
+              class="w-36 flex select-none bg-white items-center rounded-lg shadow-sm text-center justify-between border p-1 data-[invalid]:border-red-500"
             >
               <div class="flex items-center">
                 <template v-for="item in segments" :key="item.part">
@@ -34,7 +39,7 @@ import { DatePicker } from "v-datepicker";
                   <DatePicker.Input
                     v-else
                     :part="item.part"
-                    class="rounded p-0.5 focus:outline-none focus:shadow-[0_0_0_2px] focus:shadow-black data-[placeholder]:text-green9"
+                    class="rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-black"
                   >
                     {{ item.value }}
                   </DatePicker.Input>
@@ -42,7 +47,7 @@ import { DatePicker } from "v-datepicker";
               </div>
 
               <DatePicker.Trigger
-                class="focus:shadow-[0_0_0_2px] rounded p-1 focus:shadow-black"
+                class="focus:outline-none focus:ring-2 rounded p-1 focus:ring-black"
               >
                 <Icon icon="radix-icons:calendar" class="text-base" />
               </DatePicker.Trigger>
@@ -56,14 +61,18 @@ import { DatePicker } from "v-datepicker";
               <DatePicker.Calendar v-slot="{ weekDays, grid }" class="p-4">
                 <DatePicker.Header class="flex items-center justify-between">
                   <DatePicker.Prev
-                    class="inline-flex items-center cursor-pointer text-black justify-center rounded-md bg-transparent w-7 h-7 hover:bg-stone-50 active:scale-98 active:transition-all focus:shadow-[0_0_0_2px] focus:shadow-black"
+                    class="inline-flex items-center cursor-pointer text-black justify-center rounded-md bg-transparent w-7 h-7 hover:bg-stone-50 active:scale-98 active:transition-all focus:outline-none focus:ring-2 focus:ring-black"
                   >
                     <Icon icon="radix-icons:chevron-left" class="w-4 h-4" />
                   </DatePicker.Prev>
 
-                  <DatePicker.Heading class="text-black font-medium" />
+                  <DatePicker.Heading class="text-black font-medium flex gap-2">
+                    <DatePicker.MonthHeading />
+                    <DatePicker.MonthOverlay class="bg-white" />
+                    <DatePicker.YearHeading />
+                  </DatePicker.Heading>
                   <DatePicker.Next
-                    class="inline-flex items-center cursor-pointer text-black justify-center rounded-md bg-transparent w-7 h-7 hover:bg-stone-50 active:scale-98 active:transition-all focus:shadow-[0_0_0_2px] focus:shadow-black"
+                    class="inline-flex items-center cursor-pointer text-black justify-center rounded-md bg-transparent w-7 h-7 hover:bg-stone-50 active:scale-98 active:transition-all focus:outline-none focus:ring-2 focus:ring-black"
                   >
                     <Icon icon="radix-icons:chevron-right" class="w-4 h-4" />
                   </DatePicker.Next>
@@ -83,7 +92,7 @@ import { DatePicker } from "v-datepicker";
                         <DatePicker.HeadCell
                           v-for="day in weekDays"
                           :key="day"
-                          class="w-8 rounded-md text-xs text-green8"
+                          class="w-8 rounded-md text-xs text-green-700"
                         >
                           {{ day }}
                         </DatePicker.HeadCell>
@@ -103,7 +112,7 @@ import { DatePicker } from "v-datepicker";
                           <DatePicker.CellTrigger
                             :day="weekDate"
                             :month="month.value"
-                            class="relative flex items-center justify-center whitespace-nowrap rounded-[9px] border border-transparent bg-transparent text-sm font-normal text-black w-8 h-8 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black hover:border-black data-[selected]:bg-black data-[selected]:font-medium data-[outside-view]:text-black/30 data-[selected]:text-white data-[unavailable]:pointer-events-none data-[unavailable]:text-black/30 data-[unavailable]:line-through before:absolute before:top-[5px] before:hidden before:rounded-full before:w-1 before:h-1 before:bg-white data-[today]:before:block data-[today]:before:bg-green9 data-[selected]:before:bg-white"
+                            class="relative flex items-center justify-center whitespace-nowrap rounded-[9px] border border-transparent bg-transparent text-sm font-normal text-black w-8 h-8 outline-none focus:ring-2 focus:ring-black hover:border-black data-[selected]:bg-black data-[selected]:font-medium data-[outside-view]:text-black/30 data-[selected]:text-white data-[unavailable]:pointer-events-none data-[unavailable]:text-black/30 data-[unavailable]:line-through before:absolute before:top-[5px] before:hidden before:rounded-full before:w-1 before:h-1 before:bg-white data-[today]:before:block data-[today]:before:bg-green-600 data-[selected]:before:bg-white"
                           />
                         </DatePicker.Cell>
                       </DatePicker.GridRow>
@@ -122,5 +131,3 @@ import { DatePicker } from "v-datepicker";
     </div>
   </div>
 </template>
-
-<script setup lang="ts"></script>

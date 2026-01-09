@@ -39,7 +39,6 @@ type DatePickerRootContext = {
   isDateUnavailable?: Matcher;
   defaultOpen: Ref<boolean>;
   open: Ref<boolean>;
-  modal: Ref<boolean>;
   onDateChange: (date: DateValue | undefined) => void;
   onPlaceholderChange: (date: DateValue) => void;
   dir: Ref<Direction>;
@@ -84,7 +83,6 @@ const props = withDefaults(defineProps<DatePickerRootProps>(), {
   defaultValue: undefined,
   defaultOpen: false,
   open: undefined,
-  modal: false,
   pagedNavigation: false,
   preventDeselect: false,
   weekStartsOn: 0,
@@ -113,7 +111,6 @@ const {
   isDateDisabled: propsIsDateDisabled,
   isDateUnavailable: propsIsDateUnavailable,
   defaultOpen,
-  modal,
   id,
   name,
   required,
@@ -180,7 +177,6 @@ provideDatePickerRootContext({
   modelValue,
   placeholder,
   defaultOpen,
-  modal,
   open,
   id,
   name,
@@ -214,7 +210,7 @@ provideDatePickerRootContext({
 </script>
 
 <template>
-  <PopoverRoot v-model:open="open" :default-open="defaultOpen" :modal="modal">
+  <PopoverRoot v-model:open="open" :default-open="defaultOpen">
     <slot />
   </PopoverRoot>
 </template>

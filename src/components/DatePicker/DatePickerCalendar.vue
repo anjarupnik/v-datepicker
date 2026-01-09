@@ -39,6 +39,7 @@ const rootContext = injectDatePickerRootContext();
           isEqualDay(date, rootContext.modelValue.value)
         )
           return;
+
         rootContext.onDateChange(date);
       }
     "

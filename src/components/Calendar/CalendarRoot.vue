@@ -12,6 +12,8 @@ import { createContext, useDirection, useLocale } from "../../shared";
 import { getDefaultDate, handleCalendarInitialFocus } from "../../shared/date";
 import { useCalendar, useCalendarState } from "./useCalendar";
 
+export type MonthNameDateValue = DateValue & { monthName: string };
+
 type CalendarRootContext = {
   locale: Ref<string>;
   modelValue: Ref<DateValue | DateValue[] | undefined>;
@@ -33,6 +35,8 @@ type CalendarRootContext = {
   fullCalendarLabel: Ref<string>;
   parentElement: Ref<HTMLElement | undefined>;
   headingValue: Ref<string>;
+  currentMonth: Ref<string>;
+  currentYear: Ref<string>;
   isInvalid: Ref<boolean>;
   isDateDisabled: Matcher;
   isDateSelected: Matcher;
@@ -51,6 +55,8 @@ type CalendarRootContext = {
   disableDaysOutsideCurrentView: Ref<boolean>;
   minValue: Ref<DateValue | undefined>;
   maxValue: Ref<DateValue | undefined>;
+  months: Ref<MonthNameDateValue[]>;
+  years: Ref<{ year: number }[]>;
 };
 
 export interface CalendarRootProps extends PrimitiveProps {
@@ -220,6 +226,10 @@ const {
   prevPage,
   formatter,
   grid,
+  currentMonth,
+  currentYear,
+  months,
+  years,
 } = useCalendar({
   locale,
   placeholder,
@@ -331,6 +341,10 @@ provideCalendarRootContext({
   disableDaysOutsideCurrentView,
   minValue,
   maxValue,
+  currentMonth,
+  currentYear,
+  months,
+  years,
 });
 </script>
 

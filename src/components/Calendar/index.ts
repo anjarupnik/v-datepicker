@@ -1,51 +1,63 @@
 export {
   default as CalendarCell,
   type CalendarCellProps,
-} from './CalendarCell.vue'
+} from "./CalendarCell.vue";
 export {
   default as CalendarCellTrigger,
   type CalendarCellTriggerProps,
-} from './CalendarCellTrigger.vue'
+} from "./CalendarCellTrigger.vue";
 export {
   default as CalendarGrid,
   type CalendarGridProps,
-} from './CalendarGrid.vue'
+} from "./CalendarGrid.vue";
 export {
   default as CalendarGridBody,
   type CalendarGridBodyProps,
-} from './CalendarGridBody.vue'
+} from "./CalendarGridBody.vue";
 export {
   default as CalendarGridHead,
   type CalendarGridHeadProps,
-} from './CalendarGridHead.vue'
+} from "./CalendarGridHead.vue";
 export {
   default as CalendarGridRow,
   type CalendarGridRowProps,
-} from './CalendarGridRow.vue'
+} from "./CalendarGridRow.vue";
 export {
   default as CalendarHeadCell,
   type CalendarHeadCellProps,
-} from './CalendarHeadCell.vue'
+} from "./CalendarHeadCell.vue";
 export {
   default as CalendarHeader,
   type CalendarHeaderProps,
-} from './CalendarHeader.vue'
+} from "./CalendarHeader.vue";
 
 export {
   default as CalendarHeading,
   type CalendarHeadingProps,
-} from './CalendarHeading.vue'
+} from "./CalendarHeading.vue";
 export {
   default as CalendarNext,
   type CalendarNextProps,
-} from './CalendarNext.vue'
+} from "./CalendarNext.vue";
 export {
   default as CalendarPrev,
   type CalendarPrevProps,
-} from './CalendarPrev.vue'
+} from "./CalendarPrev.vue";
 export {
   default as CalendarRoot,
   type CalendarRootEmits,
   type CalendarRootProps,
   injectCalendarRootContext,
-} from './CalendarRoot.vue'
+} from "./CalendarRoot.vue";
+export {
+  default as CalendarMonthHeading,
+  type CalendarMonthHeadingProps,
+} from "./CalendarMonthHeading.vue";
+export {
+  default as CalendarYearHeading,
+  type CalendarYearHeadingProps,
+} from "./CalendarYearHeading.vue";
+export {
+  default as CalendarMonthYearOverlay,
+  type CalendarMonthYearOverlayProps,
+} from "./CalendarMonthYearOverlay.vue";

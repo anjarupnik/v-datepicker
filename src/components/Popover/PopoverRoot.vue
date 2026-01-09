@@ -11,12 +11,6 @@ export interface PopoverRootProps {
    * The controlled open state of the popover.
    */
   open?: boolean;
-  /**
-   * The modality of the popover. When set to true, interaction with outside elements will be disabled and only popover content will be visible to screen readers.
-   *
-   * @defaultValue false
-   */
-  modal?: boolean;
 }
 export type PopoverRootEmits = {
   /**
@@ -30,7 +24,6 @@ export interface PopoverRootContext {
   triggerId: string;
   contentId: string;
   open: Ref<boolean>;
-  modal: Ref<boolean>;
   onOpenChange: (value: boolean) => void;
   onOpenToggle: () => void;
   hasCustomAnchor: Ref<boolean>;
@@ -48,7 +41,6 @@ import { PopperRoot } from "../Popper";
 const props = withDefaults(defineProps<PopoverRootProps>(), {
   defaultOpen: false,
   open: undefined,
-  modal: false,
 });
 const emit = defineEmits<PopoverRootEmits>();
 
@@ -61,8 +53,6 @@ defineSlots<{
   }) => any;
 }>();
 
-const { modal } = toRefs(props);
-
 const open = useVModel(props, "open", emit, {
   defaultValue: props.defaultOpen,
   passive: (props.open === undefined) as false,
@@ -74,7 +64,6 @@ const hasCustomAnchor = ref(false);
 providePopoverRootContext({
   contentId: "",
   triggerId: "",
-  modal,
   open,
   onOpenChange: (value) => {
     open.value = value;

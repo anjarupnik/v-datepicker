@@ -18,7 +18,6 @@ export interface PopoverContentProps extends PopoverContentImplProps {
 <script setup lang="ts">
 import { Presence } from "../Presence";
 import { useForwardExpose, useForwardPropsEmits, useId } from "../../shared";
-import PopoverContentModal from "./PopoverContentModal.vue";
 import PopoverContentNonModal from "./PopoverContentNonModal.vue";
 import { injectPopoverRootContext } from "./PopoverRoot.vue";
 
@@ -35,14 +34,7 @@ rootContext.contentId ||= useId(undefined, "reka-popover-content");
 
 <template>
   <Presence :present="forceMount || rootContext.open.value">
-    <PopoverContentModal
-      v-if="rootContext.modal.value"
-      v-bind="forwarded"
-      :ref="forwardRef"
-    >
-      <slot />
-    </PopoverContentModal>
-    <PopoverContentNonModal v-else v-bind="forwarded" :ref="forwardRef">
+    <PopoverContentNonModal v-bind="forwarded" :ref="forwardRef">
       <slot />
     </PopoverContentNonModal>
   </Presence>

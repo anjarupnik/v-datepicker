@@ -19,6 +19,9 @@ import {
   DatePickerClose,
   DatePickerTrigger,
   DatePickerContent,
+  DatePickerMonthHeading,
+  DatePickerYearHeading,
+  DatePickerMonthOverlay,
 } from "./components/DatePicker/index";
 
 export const DatePicker = {
@@ -42,6 +45,9 @@ export const DatePicker = {
   Close: DatePickerClose,
   Trigger: DatePickerTrigger,
   Content: DatePickerContent,
+  MonthHeading: DatePickerMonthHeading,
+  YearHeading: DatePickerYearHeading,
+  MonthOverlay: DatePickerMonthOverlay,
 } as {
   Root: typeof DatePickerRoot;
   Header: typeof DatePickerHeader;
@@ -63,4 +69,7 @@ export const DatePicker = {
   Close: typeof DatePickerClose;
   Trigger: typeof DatePickerTrigger;
   Content: typeof DatePickerContent;
+  MonthHeading: typeof DatePickerMonthHeading;
+  YearHeading: typeof DatePickerYearHeading;
+  MonthOverlay: typeof DatePickerMonthOverlay;
 };
