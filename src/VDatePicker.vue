@@ -13,15 +13,3 @@ const date = ref(new Date());
     />
   </div>
 </template>
-
-<style scoped>
-.v-datepicker {
-  display: inline-block;
-}
-
-input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-</style>

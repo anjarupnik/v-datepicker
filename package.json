@@ -27,8 +27,9 @@
     "!src/**/story"
   ],
   "scripts": {
-    "dev": "vite",
+    "dev": "pnpm --filter playground dev",
     "build": "vue-tsc && vite build",
+    "playground:install": "pnpm --filter playground install",
     "preview": "vite preview",
     "lint": "eslint . --fix",
     "format": "prettier --write \"src/**/*.{js,ts,vue,css,scss}\""
