@@ -369,7 +369,7 @@ export function useCalendar(props: UseCalendarProps) {
   // TODO: rewrite (a lot of duplication)
   const currentMonth = computed(() => {
     if (!grid.value.length) return "";
-
+    
     if (props.locale.value !== formatter.getLocale())
       formatter.setLocale(props.locale.value);
 
@@ -399,13 +399,17 @@ export function useCalendar(props: UseCalendarProps) {
 
   // TODO: look if there is a better way to create months with locale month name
   const months = computed(() => {
+    const startDate = props.placeholder.value.set({ month: 1 });
+    
     const monthsArray = createMonths({
-      dateObj: props.placeholder.value,
+      dateObj: startDate,
       weekStartsOn: props.weekStartsOn.value,
       locale: props.locale.value,
       fixedWeeks: props.fixedWeeks.value,
       numberOfMonths: 12,
     });
+
+    
 
     return monthsArray.map((month) => {
       const date = month.value.copy() as DateValue & { monthName: string };
