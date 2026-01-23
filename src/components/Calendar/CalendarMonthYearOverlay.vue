@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { Primitive, type PrimitiveProps } from "../Primitive";
-import { injectCalendarRootContext } from "./CalendarRoot.vue";import DismissableLayer from "../DismissableLayer/DismissableLayer.vue";
+import { injectCalendarRootContext } from "./CalendarRoot.vue";
+import DismissableLayer from "../DismissableLayer/DismissableLayer.vue";
 
 export interface CalendarMonthYearOverlayProps extends PrimitiveProps {
   type: "month" | "year";
@@ -11,25 +12,25 @@ const props = defineProps<CalendarMonthYearOverlayProps>();
 
 defineOptions({
   inheritAttrs: false,
-})
+});
 
 const rootContext = injectCalendarRootContext();
 
 const months = computed(() => rootContext.months.value);
 const years = computed(() => rootContext.years.value);
 
-const isOpen = computed(() => rootContext.monthYearOverlayState.value === props.type);
+const isOpen = computed(
+  () => rootContext.monthYearOverlayState.value === props.type,
+);
 
 function onEscapeKeyDown() {
   rootContext.monthYearOverlayState.value = false;
 }
-
 </script>
 
 <template>
-  <DismissableLayer as-child @escape-key-down="onEscapeKeyDown">
+  <DismissableLayer v-if="isOpen" as-child @escape-key-down="onEscapeKeyDown">
     <Primitive
-      v-if="isOpen"
       v-bind="{ ...props, ...$attrs }"
       :style="{
         position: 'absolute',
@@ -42,7 +43,11 @@ function onEscapeKeyDown() {
       role="dialog"
       tabindex="0"
     >
-      <slot :months="months" :years="years" :state="rootContext.monthYearOverlayState" />
+      <slot
+        :months="months"
+        :years="years"
+        :state="rootContext.monthYearOverlayState"
+      />
     </Primitive>
   </DismissableLayer>
 </template>
