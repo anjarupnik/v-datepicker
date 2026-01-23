@@ -21,7 +21,7 @@ import {
   DatePickerContent,
   DatePickerMonthHeading,
   DatePickerYearHeading,
-  DatePickerMonthOverlay,
+  DatePickerMonthYearOverlay,
   DatePickerOverlayItem,
 } from "./components/DatePicker/index";
 
@@ -48,7 +48,7 @@ export const DatePicker = {
   Content: DatePickerContent,
   MonthHeading: DatePickerMonthHeading,
   YearHeading: DatePickerYearHeading,
-  MonthOverlay: DatePickerMonthOverlay,
+  MonthYearOverlay: DatePickerMonthYearOverlay,
   OverlayItem: DatePickerOverlayItem,
 } as {
   Root: typeof DatePickerRoot;
@@ -73,6 +73,6 @@ export const DatePicker = {
   Content: typeof DatePickerContent;
   MonthHeading: typeof DatePickerMonthHeading;
   YearHeading: typeof DatePickerYearHeading;
-  MonthOverlay: typeof DatePickerMonthOverlay;
+  MonthYearOverlay: typeof DatePickerMonthYearOverlay;
   OverlayItem: typeof DatePickerOverlayItem;
 };

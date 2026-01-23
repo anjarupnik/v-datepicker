@@ -68,7 +68,7 @@ import { CalendarDate, type DateValue } from "@internationalized/date";
 
                   <DatePicker.Heading class="text-black font-medium flex gap-2">
                     <DatePicker.MonthHeading />
-                    <DatePicker.MonthOverlay class="bg-white grid grid-cols-2">
+                    <DatePicker.MonthYearOverlay type="month" class="bg-white grid grid-cols-2">
                       <template #default="{ months }">          
                         <DatePicker.OverlayItem
                           v-for="month in months"
@@ -79,8 +79,20 @@ import { CalendarDate, type DateValue } from "@internationalized/date";
                           {{ month.monthName }}
                         </DatePicker.OverlayItem>
                       </template>
-                    </DatePicker.MonthOverlay>
+                    </DatePicker.MonthYearOverlay>
                     <DatePicker.YearHeading />
+                    <DatePicker.MonthYearOverlay type="year" class="bg-white grid grid-cols-2 overflow-y-auto">
+                      <template #default="{ years }">       
+                        <DatePicker.OverlayItem
+                          v-for="year in years"
+                          :key="year.year"
+                          :date="year"
+                          class="border border-solid border-gray-400"
+                        >
+                          {{ year.year }}
+                        </DatePicker.OverlayItem>
+                      </template>
+                    </DatePicker.MonthYearOverlay>
                   </DatePicker.Heading>
                   <DatePicker.Next
                     class="inline-flex items-center cursor-pointer text-black justify-center rounded-md bg-transparent w-7 h-7 hover:bg-stone-50 active:scale-98 active:transition-all focus:outline-none focus:ring-2 focus:ring-black"

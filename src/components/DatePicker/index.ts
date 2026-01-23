@@ -83,9 +83,9 @@ export {
   type DatePickerYearHeadingProps,
 } from "./DatePickerYearHeading.vue";
 export {
-  default as DatePickerMonthOverlay,
-  type DatePickerMonthOverlayProps,
-} from "./DatePickerMonthOverlay.vue";
+  default as DatePickerMonthYearOverlay,
+  type DatePickerMonthYearOverlayProps,
+} from "./DatePickerMonthYearOverlay.vue";
 export {
   default as DatePickerOverlayItem,
   type DatePickerOverlayItemProps,
