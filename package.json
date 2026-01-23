@@ -1,20 +1,25 @@
 {
-  "name": "v-datepicker",
+  "name": "@rupe/v-datepicker",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0-alpha.1",
   "description": "A Vue 3 datepicker component",
   "packageManager": "pnpm@10.13.1",
   "author": "Anja Rupnik",
   "license": "MIT",
   "repository": "anjarupnik/v-datepicker",
   "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
     }
   },
   "files": [
@@ -28,7 +33,7 @@
   ],
   "scripts": {
     "dev": "pnpm --filter playground dev",
-    "build": "vue-tsc && vite build",
+    "build": "vite build",
     "playground:install": "pnpm --filter playground install",
     "preview": "vite preview",
     "lint": "eslint . --fix",
@@ -65,6 +70,8 @@
     "@floating-ui/vue": "^1.1.9",
     "@internationalized/date": "^3.10.1",
     "@vueuse/core": "^14.1.0",
-    "@vueuse/shared": "^14.1.0"
+    "@vueuse/shared": "^14.1.0",
+    "defu": "^6.1.4",
+    "ohash": "^2.0.11"
   }
 }

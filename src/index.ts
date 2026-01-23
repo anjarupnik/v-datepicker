@@ -50,29 +50,6 @@ export const DatePicker = {
   YearHeading: DatePickerYearHeading,
   MonthYearOverlay: DatePickerMonthYearOverlay,
   OverlayItem: DatePickerOverlayItem,
-} as {
-  Root: typeof DatePickerRoot;
-  Header: typeof DatePickerHeader;
-  Heading: typeof DatePickerHeading;
-  Grid: typeof DatePickerGrid;
-  Cell: typeof DatePickerCell;
-  HeadCell: typeof DatePickerHeadCell;
-  Next: typeof DatePickerNext;
-  Prev: typeof DatePickerPrev;
-  GridHead: typeof DatePickerGridHead;
-  GridBody: typeof DatePickerGridBody;
-  GridRow: typeof DatePickerGridRow;
-  CellTrigger: typeof DatePickerCellTrigger;
-  Input: typeof DatePickerInput;
-  Calendar: typeof DatePickerCalendar;
-  Field: typeof DatePickerField;
-  Anchor: typeof DatePickerAnchor;
-  Arrow: typeof DatePickerArrow;
-  Close: typeof DatePickerClose;
-  Trigger: typeof DatePickerTrigger;
-  Content: typeof DatePickerContent;
-  MonthHeading: typeof DatePickerMonthHeading;
-  YearHeading: typeof DatePickerYearHeading;
-  MonthYearOverlay: typeof DatePickerMonthYearOverlay;
-  OverlayItem: typeof DatePickerOverlayItem;
-};
+} as const;
+
+export default DatePicker;

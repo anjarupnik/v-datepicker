@@ -13,7 +13,7 @@
     "@iconify/vue": "^5.0.0",
     "@nuxtjs/tailwindcss": "6.14.0",
     "nuxt": "^4.2.2",
-    "v-datepicker": "workspace:*",
+    "@rupe/v-datepicker": "workspace:*",
     "vue": "^3.5.26",
     "vue-router": "^4.6.4"
   }

@@ -10,14 +10,14 @@ export default defineConfig({
   plugins: [
     vue(),
     dts({
-      cleanVueFileName: true,
       tsconfigPath: "tsconfig.json",
-      insertTypesEntry: true,
+      staticImport: true,
+      rollupTypes: false,
     }),
   ],
   resolve: {
     alias: {
-      "@": resolve(__dirname, "src"),
+      "@rupe/v-datepicker": resolve(__dirname, "src"),
     },
   },
   build: {
@@ -28,21 +28,21 @@ export default defineConfig({
       fileName: (format) => (format === "es" ? "index.js" : "index.cjs"),
     },
     rollupOptions: {
-      external: ["vue"],
+      external: ["vue", "@floating-ui/vue", "@internationalized/date", "@vueuse/core", "@vueuse/shared", "defu", "ohash"],
       output: [
         {
-          format: "es",
-          preserveModules: true,
-          preserveModulesRoot: "src",
-          entryFileNames: "[name].js",
-          dir: "dist",
-          globals: { vue: "Vue" },
+          format: 'es',
+          exports: 'named',
+          preserveModules: false,
+          entryFileNames: '[name].mjs',
+          globals: { vue: 'Vue' },
         },
         {
-          format: "cjs",
-          entryFileNames: "index.cjs",
-          dir: "dist",
-          globals: { vue: "Vue" },
+          format: 'cjs',
+          exports: 'named',
+          preserveModules: false,
+          entryFileNames: '[name].cjs',
+          globals: { vue: 'Vue' },
         },
       ],
     },
@@ -50,3 +50,5 @@ export default defineConfig({
     minify: false,
   },
 });
+
+
