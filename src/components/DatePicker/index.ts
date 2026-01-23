@@ -86,3 +86,7 @@ export {
   default as DatePickerMonthOverlay,
   type DatePickerMonthOverlayProps,
 } from "./DatePickerMonthOverlay.vue";
+export {
+  default as DatePickerOverlayItem,
+  type DatePickerOverlayItemProps,
+} from "./DatePickerOverlayItem.vue";

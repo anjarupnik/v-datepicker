@@ -41,6 +41,10 @@ const ariaLabel = computed(
     " - " +
     (attrs["aria-label"] || "Open month selection overlay"),
 );
+
+function handleClick() {
+  rootContext.monthYearOverlayState.value = "month";
+}
 </script>
 
 <template>
@@ -52,7 +56,7 @@ const ariaLabel = computed(
     :aria-disabled="disabled || undefined"
     :data-disabled="disabled || undefined"
     :disabled="disabled"
-    @click="() => console.log('clicked')"
+    @click="handleClick"
   >
     <slot :disabled>
       {{ currentMonth }}

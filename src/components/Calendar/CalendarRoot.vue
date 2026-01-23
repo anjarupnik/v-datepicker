@@ -57,6 +57,7 @@ type CalendarRootContext = {
   maxValue: Ref<DateValue | undefined>;
   months: Ref<MonthNameDateValue[]>;
   years: Ref<{ year: number }[]>;
+  monthYearOverlayState: Ref<false | "month" | "year">;
 };
 
 export interface CalendarRootProps extends PrimitiveProps {
@@ -123,7 +124,7 @@ export const [injectCalendarRootContext, provideCalendarRootContext] =
 
 <script setup lang="ts">
 import { useVModel } from "@vueuse/core";
-import { onMounted, toRefs, watch } from "vue";
+import { onMounted, toRefs, watch, ref } from "vue";
 import { Primitive, usePrimitiveElement } from "../Primitive";
 
 const props = withDefaults(defineProps<CalendarRootProps>(), {
@@ -197,6 +198,8 @@ const modelValue = useVModel(props, "modelValue", emits, {
   defaultValue: defaultValue.value,
   passive: (props.modelValue === undefined) as false,
 }) as Ref<DateValue | DateValue[] | undefined>;
+
+const monthYearOverlayState = ref<(false | "month" | "year")>(false);
 
 const defaultDate = getDefaultDate({
   defaultPlaceholder: props.placeholder,
@@ -324,6 +327,7 @@ provideCalendarRootContext({
   fixedWeeks,
   multiple,
   numberOfMonths,
+  monthYearOverlayState,
   readonly,
   preventDeselect,
   fullCalendarLabel,

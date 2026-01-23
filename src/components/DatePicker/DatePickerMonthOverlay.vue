@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import { computed } from "vue";
 import { CalendarMonthYearOverlay } from "../Calendar";
-import { injectDateFieldRootContext } from "../DateField/DateFieldRoot.vue";
-import type { MonthNameDateValue } from "../Calendar/CalendarRoot.vue";
+import type { PrimitiveProps } from "../Primitive";
 
-export interface DatePickerMonthOverlayProps {}
+export type DatePickerMonthOverlayProps = PrimitiveProps 
 
 const props = defineProps<DatePickerMonthOverlayProps>();
-</script>
+</script> 
 
 <template>
-  <CalendarMonthYearOverlay v-bind="props" type="month">
-    <slot />
+  <CalendarMonthYearOverlay v-bind="props" type="month" v-slot="{ months }">
+    <slot :months="months" />
   </CalendarMonthYearOverlay>
 </template>

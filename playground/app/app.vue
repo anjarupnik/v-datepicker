@@ -68,7 +68,18 @@ import { CalendarDate, type DateValue } from "@internationalized/date";
 
                   <DatePicker.Heading class="text-black font-medium flex gap-2">
                     <DatePicker.MonthHeading />
-                    <DatePicker.MonthOverlay class="bg-white" />
+                    <DatePicker.MonthOverlay class="bg-white grid grid-cols-2">
+                      <template #default="{ months }">          
+                        <DatePicker.OverlayItem
+                          v-for="month in months"
+                          :key="month.monthName"
+                          :date="month"
+                          class="border border-solid border-gray-400"
+                        >
+                          {{ month.monthName }}
+                        </DatePicker.OverlayItem>
+                      </template>
+                    </DatePicker.MonthOverlay>
                     <DatePicker.YearHeading />
                   </DatePicker.Heading>
                   <DatePicker.Next
