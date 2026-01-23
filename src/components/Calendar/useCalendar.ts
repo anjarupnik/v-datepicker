@@ -14,6 +14,7 @@ import {
   isAfter,
   isBefore,
   toDate,
+  createYearRange,
 } from "../../date";
 import { useDateFormatter } from "../../shared";
 
@@ -400,7 +401,7 @@ export function useCalendar(props: UseCalendarProps) {
   // TODO: look if there is a better way to create months with locale month name
   const months = computed(() => {
     const startDate = props.placeholder.value.set({ month: 1 });
-    
+
     const monthsArray = createMonths({
       dateObj: startDate,
       weekStartsOn: props.weekStartsOn.value,
@@ -420,9 +421,10 @@ export function useCalendar(props: UseCalendarProps) {
 
   // TODO: add min and max for years and maybe we should switch to date object here as well for consistency
   const years = computed(() => {
-    return Array.from({ length: 2100 - 1875 + 1 }, (_, i) => ({
-      year: 1875 + i,
-    }));
+    const startDate = props.placeholder.value.set({ year: 1875 });
+    const endDate = props.placeholder.value.set({ year: 2100 });
+    
+    return createYearRange({ start: startDate, end: endDate })
   });
 
   const fullCalendarLabel = computed(
