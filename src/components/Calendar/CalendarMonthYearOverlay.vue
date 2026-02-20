@@ -1,23 +1,43 @@
-<script setup lang="ts">
-import { computed } from "vue";
-import { Primitive, type PrimitiveProps } from "../Primitive";
-import { injectCalendarRootContext } from "./CalendarRoot.vue";
-import DismissableLayer from "../DismissableLayer/DismissableLayer.vue";
+<script lang="ts">
+import { createContext } from "../../shared";
 
 export interface CalendarMonthYearOverlayProps extends PrimitiveProps {
   type: "month" | "year";
+  itemsPerRow?: number;
 }
 
-const props = defineProps<CalendarMonthYearOverlayProps>();
+type CalendarMonthYearOverlayContext = {
+  itemsPerRow: ComputedRef<number>;
+};
+
+export const [
+  injectCalendarMonthYearOverlayContext,
+  provideCalendarMonthYearOverlayContext,
+] = createContext<CalendarMonthYearOverlayContext>("CalendarMonthYearOverlay");
+</script>
+
+<script setup lang="ts">
+import { computed, type ComputedRef } from "vue";
+import { Primitive, type PrimitiveProps } from "../Primitive";
+import { injectCalendarRootContext } from "./CalendarRoot.vue";
+import DismissableLayer from "../DismissableLayer/DismissableLayer.vue";
+import { chunk } from "../../shared";
 
 defineOptions({
   inheritAttrs: false,
 });
 
+const props = withDefaults(defineProps<CalendarMonthYearOverlayProps>(), {
+  itemsPerRow: 4,
+});
+
+const itemsPerRow = computed(() => props.itemsPerRow);
 const rootContext = injectCalendarRootContext();
 
-const months = computed(() => rootContext.months.value);
-const years = computed(() => rootContext.years.value);
+const months = computed(() =>
+  chunk(rootContext.months.value, props.itemsPerRow),
+);
+const years = computed(() => chunk(rootContext.years.value, props.itemsPerRow));
 
 const isOpen = computed(
   () => rootContext.monthYearOverlayState.value === props.type,
@@ -26,6 +46,10 @@ const isOpen = computed(
 function onEscapeKeyDown() {
   rootContext.monthYearOverlayState.value = false;
 }
+
+provideCalendarMonthYearOverlayContext({
+  itemsPerRow,
+});
 </script>
 
 <template>

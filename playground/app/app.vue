@@ -70,33 +70,73 @@ import { CalendarDate, type DateValue } from "@internationalized/date";
                     <DatePicker.MonthHeading />
                     <DatePicker.MonthYearOverlay
                       type="month"
-                      class="bg-white grid grid-cols-2"
+                      class="bg-white rounded-xl"
+                      :items-per-row="2"
                     >
                       <template #default="{ months }">
-                        <DatePicker.OverlayItem
-                          v-for="month in months"
-                          :key="month.monthName"
-                          :date="month"
-                          class="border border-solid border-gray-400"
+                        <DatePicker.Grid
+                          class="w-full h-full flex flex-column justify-center items-center rounded-lg p-0.5"
                         >
-                          {{ month.monthName }}
-                        </DatePicker.OverlayItem>
+                          <DatePicker.GridBody
+                            class="w-full h-full flex flex-col"
+                          >
+                            <DatePicker.GridRow
+                              v-for="(row, index) in months"
+                              :key="`month-row-${index}`"
+                              class="flex w-full grow"
+                            >
+                              <DatePicker.Cell
+                                v-for="month in row"
+                                :key="month.monthName"
+                                :date="month"
+                                class="w-full h-full"
+                              >
+                                <DatePicker.OverlayItem
+                                  :date="month"
+                                  class="border border-solid w-full h-full flex justify-center items-center rounded-lg"
+                                >
+                                  {{ month.monthName }}
+                                </DatePicker.OverlayItem>
+                              </DatePicker.Cell>
+                            </DatePicker.GridRow>
+                          </DatePicker.GridBody>
+                        </DatePicker.Grid>
                       </template>
                     </DatePicker.MonthYearOverlay>
                     <DatePicker.YearHeading />
                     <DatePicker.MonthYearOverlay
                       type="year"
-                      class="bg-white grid grid-cols-2 overflow-y-auto"
+                      class="bg-white w-100 h-100 overflow-y-auto rounded-xl"
+                      :items-per-row="2"
                     >
                       <template #default="{ years }">
-                        <DatePicker.OverlayItem
-                          v-for="year in years"
-                          :key="year.year"
-                          :date="year"
-                          class="border border-solid border-gray-400"
+                        <DatePicker.Grid
+                          class="w-full h-full flex flex-column justify-center items-center rounded-lg p-0.5"
                         >
-                          {{ year.year }}
-                        </DatePicker.OverlayItem>
+                          <DatePicker.GridBody
+                            class="w-full h-full flex flex-col"
+                          >
+                            <DatePicker.GridRow
+                              v-for="(row, index) in years"
+                              :key="`year-row-${index}`"
+                              class="flex w-full grow"
+                            >
+                              <DatePicker.Cell
+                                v-for="year in row"
+                                :key="year.year"
+                                :date="year"
+                                class="w-full h-full"
+                              >
+                                <DatePicker.OverlayItem
+                                  :date="year"
+                                  class="border border-solid w-full h-full flex justify-center items-center rounded-lg"
+                                >
+                                  {{ year.year }}
+                                </DatePicker.OverlayItem>
+                              </DatePicker.Cell>
+                            </DatePicker.GridRow>
+                          </DatePicker.GridBody>
+                        </DatePicker.Grid>
                       </template>
                     </DatePicker.MonthYearOverlay>
                   </DatePicker.Heading>

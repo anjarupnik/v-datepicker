@@ -370,7 +370,7 @@ export function useCalendar(props: UseCalendarProps) {
   // TODO: rewrite (a lot of duplication)
   const currentMonth = computed(() => {
     if (!grid.value.length) return "";
-    
+
     if (props.locale.value !== formatter.getLocale())
       formatter.setLocale(props.locale.value);
 
@@ -410,8 +410,6 @@ export function useCalendar(props: UseCalendarProps) {
       numberOfMonths: 12,
     });
 
-    
-
     return monthsArray.map((month) => {
       const date = month.value.copy() as DateValue & { monthName: string };
       date.monthName = `${formatter.fullMonth(toDate(date), headingFormatOptions.value)}`;
@@ -423,8 +421,8 @@ export function useCalendar(props: UseCalendarProps) {
   const years = computed(() => {
     const startDate = props.placeholder.value.set({ year: 1875 });
     const endDate = props.placeholder.value.set({ year: 2100 });
-    
-    return createYearRange({ start: startDate, end: endDate })
+
+    return createYearRange({ start: startDate, end: endDate });
   });
 
   const fullCalendarLabel = computed(
