@@ -20,10 +20,16 @@ const props = withDefaults(defineProps<CalendarOverlayItemProps>(), {
 
 const rootContext = injectCalendarRootContext();
 const years = computed(() => rootContext.years.value);
+const maxValue = computed(() =>
+  props.type === "month" ? 12 : years.value.length,
+);
 const overlayContext = injectCalendarMonthYearOverlayContext();
+const dataValue = computed(() => `${props.type}-${props.date[props.type]}`);
 
 const isFocusedDate = computed(() => {
-  return rootContext.currentMonth.value === props.date.monthName;
+  if (props.type === "month")
+    return rootContext.currentMonth.value === props.date.monthName;
+  return rootContext.currentYear.value === props.date.year.toString();
 });
 
 function closeOverlay() {
@@ -74,18 +80,19 @@ function handleArrowKey(e: KeyboardEvent) {
   }
 
   function shiftFocus(date: DateValue, add: number) {
-    let nextDate = date.month + add;
+    let nextDate = date[props.type] + add;
 
+    // TODO: fix for years
     if (nextDate <= 0) {
-      nextDate = 12 + nextDate;
+      nextDate = maxValue.value + nextDate;
     }
 
-    if (nextDate > 12) {
-      nextDate = nextDate - 12;
+    if (nextDate > years.value[maxValue.value - 1].year) {
+      nextDate = nextDate - maxValue.value;
     }
 
     const candidateDay = parentElement.querySelector<HTMLElement>(
-      `[data-value='month-${nextDate}']`,
+      `[data-value='${props.type}-${nextDate}']`,
     );
 
     candidateDay?.focus();
@@ -100,7 +107,7 @@ function handleArrowKey(e: KeyboardEvent) {
     ref="primitiveElement"
     role="button"
     :aria-disabled="disabled"
-    :data-value="`month-${date.month}`"
+    :data-value="dataValue"
     @keydown.up.down.left.right.space.enter="handleArrowKey"
     @keydown.enter.prevent
     :tabindex="isFocusedDate ? 0 : -1"

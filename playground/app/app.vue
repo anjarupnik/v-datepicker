@@ -93,6 +93,7 @@ import { CalendarDate, type DateValue } from "@internationalized/date";
                               >
                                 <DatePicker.OverlayItem
                                   :date="month"
+                                  type="month"
                                   class="border border-solid w-full h-full flex justify-center items-center rounded-lg"
                                 >
                                   {{ month.monthName }}
@@ -129,6 +130,7 @@ import { CalendarDate, type DateValue } from "@internationalized/date";
                               >
                                 <DatePicker.OverlayItem
                                   :date="year"
+                                  type="year"
                                   class="border border-solid w-full h-full flex justify-center items-center rounded-lg"
                                 >
                                   {{ year.year }}
