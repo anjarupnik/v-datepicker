@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted, nextTick } from "vue";
 import type { DateValue } from "@internationalized/date";
-import { Primitive } from "../Primitive";
+import { Primitive, usePrimitiveElement } from "../Primitive";
 import type { PrimitiveProps } from "../Primitive";
 import { injectCalendarRootContext } from "./CalendarRoot.vue";
 import { useKbd } from "../../shared";
@@ -20,11 +20,10 @@ const props = withDefaults(defineProps<CalendarOverlayItemProps>(), {
 
 const rootContext = injectCalendarRootContext();
 const years = computed(() => rootContext.years.value);
-const maxValue = computed(() =>
-  props.type === "month" ? 12 : years.value.length,
-);
 const overlayContext = injectCalendarMonthYearOverlayContext();
 const dataValue = computed(() => `${props.type}-${props.date[props.type]}`);
+
+const { primitiveElement, currentElement } = usePrimitiveElement();
 
 const isFocusedDate = computed(() => {
   if (props.type === "month")
@@ -32,17 +31,33 @@ const isFocusedDate = computed(() => {
   return rootContext.currentYear.value === props.date.year.toString();
 });
 
+const ariaLabel = computed(() => {
+  if (props.type === "month") return props.date.monthName;
+  return props.date.year.toString();
+});
+
+onMounted(() => {
+  if (isFocusedDate.value) {
+    nextTick(() => {
+      currentElement.value?.focus();
+      currentElement.value?.scrollIntoView({ block: "nearest" });
+      console.log(document.activeElement);
+    });
+  }
+});
+
+function isDateSelectable(date: DateValue) {
+  return (
+    !rootContext.isDateDisabled(date) && !rootContext.isDateUnavailable?.(date)
+  );
+}
+
 function closeOverlay() {
   rootContext.monthYearOverlayState.value = false;
 }
 
 function handleClick() {
-  // TODO: double check if disabled and unavailable works properly for a month
-  if (
-    rootContext.isDateDisabled(props.date) ||
-    rootContext.isDateUnavailable?.(props.date)
-  )
-    return;
+  if (!isDateSelectable(props.date)) return;
 
   rootContext.onDateChange(props.date);
   closeOverlay();
@@ -50,52 +65,69 @@ function handleClick() {
 
 const kbd = useKbd();
 
-function handleArrowKey(e: KeyboardEvent) {
+function handleKeydown(e: KeyboardEvent) {
   if (props.disabled) return;
   e.preventDefault();
   e.stopPropagation();
   const parentElement = rootContext.parentElement.value!;
 
-  const indexIncrementation = overlayContext.itemsPerRow.value;
+  const itemsPerRow = overlayContext.itemsPerRow.value;
   const sign = rootContext.dir.value === "rtl" ? -1 : 1;
+  const currentValue = props.date[props.type];
 
-  // TODO: check how we can reuse code with CalendarCellTrigger
   switch (e.code) {
     case kbd.ARROW_RIGHT:
-      shiftFocus(props.date, sign);
+      shiftFocus(sign);
       break;
     case kbd.ARROW_LEFT:
-      shiftFocus(props.date, -sign);
+      shiftFocus(-sign);
       break;
     case kbd.ARROW_UP:
-      shiftFocus(props.date, -indexIncrementation);
+      shiftFocus(-itemsPerRow);
       break;
     case kbd.ARROW_DOWN:
-      shiftFocus(props.date, indexIncrementation);
+      shiftFocus(itemsPerRow);
       break;
+    case kbd.HOME: {
+      const indexInGrid =
+        props.type === "month"
+          ? currentValue - 1
+          : currentValue - years.value[0]!.year;
+      shiftFocus(-(indexInGrid % itemsPerRow));
+      break;
+    }
+    case kbd.END: {
+      const indexInGrid =
+        props.type === "month"
+          ? currentValue - 1
+          : currentValue - years.value[0]!.year;
+      shiftFocus(itemsPerRow - 1 - (indexInGrid % itemsPerRow));
+      break;
+    }
     case kbd.ENTER:
     case kbd.SPACE_CODE:
-      rootContext.onDateChange(props.date);
-      closeOverlay();
+      if (isDateSelectable(props.date)) {
+        rootContext.onDateChange(props.date);
+        closeOverlay();
+      }
   }
 
-  function shiftFocus(date: DateValue, add: number) {
-    let nextDate = date[props.type] + add;
+  function shiftFocus(add: number) {
+    let nextValue = currentValue + add;
 
-    // TODO: fix for years
-    if (nextDate <= 0) {
-      nextDate = maxValue.value + nextDate;
+    if (props.type === "month") {
+      nextValue = ((nextValue - 1 + 12) % 12) + 1;
+    } else {
+      const minYear = years.value[0]!.year;
+      const maxYear = years.value[years.value.length - 1]!.year;
+      nextValue = Math.max(minYear, Math.min(nextValue, maxYear));
     }
 
-    if (nextDate > years.value[maxValue.value - 1].year) {
-      nextDate = nextDate - maxValue.value;
-    }
-
-    const candidateDay = parentElement.querySelector<HTMLElement>(
-      `[data-value='${props.type}-${nextDate}']`,
+    const candidate = parentElement.querySelector<HTMLElement>(
+      `[data-value='${props.type}-${nextValue}']`,
     );
-
-    candidateDay?.focus();
+    candidate?.focus();
+    candidate?.scrollIntoView({ block: "nearest" });
   }
 }
 </script>
@@ -106,9 +138,10 @@ function handleArrowKey(e: KeyboardEvent) {
     @click="handleClick"
     ref="primitiveElement"
     role="button"
+    :aria-label="ariaLabel"
     :aria-disabled="disabled"
     :data-value="dataValue"
-    @keydown.up.down.left.right.space.enter="handleArrowKey"
+    @keydown.up.down.left.right.space.enter.home.end="handleKeydown"
     @keydown.enter.prevent
     :tabindex="isFocusedDate ? 0 : -1"
   >

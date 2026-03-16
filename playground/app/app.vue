@@ -67,7 +67,9 @@ import { CalendarDate, type DateValue } from "@internationalized/date";
                   </DatePicker.Prev>
 
                   <DatePicker.Heading class="text-black font-medium flex gap-2">
-                    <DatePicker.MonthHeading />
+                    <DatePicker.MonthHeading
+                      class="focus:outline-none focus:ring-2 focus:ring-black rounded-md"
+                    />
                     <DatePicker.MonthYearOverlay
                       type="month"
                       class="bg-white rounded-xl"
@@ -94,7 +96,7 @@ import { CalendarDate, type DateValue } from "@internationalized/date";
                                 <DatePicker.OverlayItem
                                   :date="month"
                                   type="month"
-                                  class="border border-solid w-full h-full flex justify-center items-center rounded-lg"
+                                  class="border border-solid w-full h-full flex justify-center items-center rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                 >
                                   {{ month.monthName }}
                                 </DatePicker.OverlayItem>
@@ -104,7 +106,9 @@ import { CalendarDate, type DateValue } from "@internationalized/date";
                         </DatePicker.Grid>
                       </template>
                     </DatePicker.MonthYearOverlay>
-                    <DatePicker.YearHeading />
+                    <DatePicker.YearHeading
+                      class="focus:outline-none focus:ring-2 focus:ring-black rounded-md"
+                    />
                     <DatePicker.MonthYearOverlay
                       type="year"
                       class="bg-white w-100 h-100 overflow-y-auto rounded-xl"
@@ -131,7 +135,7 @@ import { CalendarDate, type DateValue } from "@internationalized/date";
                                 <DatePicker.OverlayItem
                                   :date="year"
                                   type="year"
-                                  class="border border-solid w-full h-full flex justify-center items-center rounded-lg"
+                                  class="border border-solid w-full h-full flex justify-center items-center rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                 >
                                   {{ year.year }}
                                 </DatePicker.OverlayItem>
@@ -183,7 +187,7 @@ import { CalendarDate, type DateValue } from "@internationalized/date";
                           <DatePicker.CellTrigger
                             :day="weekDate"
                             :month="month.value"
-                            class="relative flex items-center justify-center whitespace-nowrap rounded-[9px] border border-transparent bg-transparent text-sm font-normal text-black w-8 h-8 outline-none focus:ring-2 focus:ring-black hover:border-black data-[selected]:bg-black data-[selected]:font-medium data-[outside-view]:text-black/30 data-[selected]:text-white data-[unavailable]:pointer-events-none data-[unavailable]:text-black/30 data-[unavailable]:line-through before:absolute before:top-[5px] before:hidden before:rounded-full before:w-1 before:h-1 before:bg-white data-[today]:before:block data-[today]:before:bg-green-600 data-[selected]:before:bg-white"
+                            class="relative flex items-center justify-center whitespace-nowrap rounded-[9px] border border-transparent bg-transparent text-sm font-normal text-black w-8 h-8 outline-none focus:outline-none focus:ring-2 focus:ring-black hover:border-black data-[selected]:bg-black data-[selected]:font-medium data-[outside-view]:text-black/30 data-[selected]:text-white data-[unavailable]:pointer-events-none data-[unavailable]:text-black/30 data-[unavailable]:line-through before:absolute before:top-[5px] before:hidden before:rounded-full before:w-1 before:h-1 before:bg-white data-[today]:before:block data-[today]:before:bg-green-600 data-[selected]:before:bg-white"
                           />
                         </DatePicker.Cell>
                       </DatePicker.GridRow>

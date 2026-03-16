@@ -65,7 +65,6 @@ provideCalendarMonthYearOverlayContext({
         zIndex: '1000',
       }"
       role="dialog"
-      tabindex="0"
     >
       <slot
         :months="months"
