@@ -41,7 +41,6 @@ onMounted(() => {
     nextTick(() => {
       currentElement.value?.focus();
       currentElement.value?.scrollIntoView({ block: "nearest" });
-      console.log(document.activeElement);
     });
   }
 });

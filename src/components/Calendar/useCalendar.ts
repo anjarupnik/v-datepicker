@@ -110,6 +110,10 @@ function handlePrevPage(
 export function useCalendar(props: UseCalendarProps) {
   const formatter = useDateFormatter(props.locale.value);
 
+  watch(props.locale, (newLocale) => {
+    formatter.setLocale(newLocale);
+  });
+
   const headingFormatOptions = computed(() => {
     const options: DateFormatterOptions = {
       calendar: props.placeholder.value.calendar.identifier,
@@ -329,10 +333,7 @@ export function useCalendar(props: UseCalendarProps) {
   );
 
   const headingValue = computed(() => {
-    if (!grid.value.length) return "";
-
-    if (props.locale.value !== formatter.getLocale())
-      formatter.setLocale(props.locale.value);
+    if (!grid.value.length || !grid.value[0]) return "";
 
     if (grid.value.length === 1) {
       const month = grid.value[0].value;
@@ -340,7 +341,8 @@ export function useCalendar(props: UseCalendarProps) {
     }
 
     const startMonth = toDate(grid.value[0].value);
-    const endMonth = toDate(grid.value[grid.value.length - 1].value);
+    const lastMonth = grid.value[grid.value.length - 1];
+    const endMonth = toDate(lastMonth ? lastMonth.value : grid.value[0].value);
 
     const startMonthName = formatter.fullMonth(
       startMonth,
@@ -367,36 +369,22 @@ export function useCalendar(props: UseCalendarProps) {
     return content;
   });
 
-  // TODO: rewrite (a lot of duplication)
-  const currentMonth = computed(() => {
+  function formatGridDate(fn: (date: Date) => string): string {
     if (!grid.value.length) return "";
 
-    if (props.locale.value !== formatter.getLocale())
-      formatter.setLocale(props.locale.value);
-
     const date = grid.value[0]?.value;
+    if (!date) return "";
 
-    if (date) {
-      return `${formatter.fullMonth(toDate(date), headingFormatOptions.value)}`;
-    }
+    return fn(toDate(date));
+  }
 
-    return "";
-  });
+  const currentMonth = computed(() =>
+    formatGridDate((d) => formatter.fullMonth(d, headingFormatOptions.value)),
+  );
 
-  const currentYear = computed(() => {
-    if (!grid.value.length) return "";
-
-    if (props.locale.value !== formatter.getLocale())
-      formatter.setLocale(props.locale.value);
-
-    const date = grid.value[0]?.value;
-
-    if (date) {
-      return `${formatter.fullYear(toDate(date), headingFormatOptions.value)}`;
-    }
-
-    return "";
-  });
+  const currentYear = computed(() =>
+    formatGridDate((d) => formatter.fullYear(d, headingFormatOptions.value)),
+  );
 
   // TODO: look if there is a better way to create months with locale month name
   const months = computed(() => {
