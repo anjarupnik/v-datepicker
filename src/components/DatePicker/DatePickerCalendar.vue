@@ -27,6 +27,8 @@ const rootContext = injectDatePickerRootContext();
       readonly: rootContext.readonly.value,
       preventDeselect: rootContext.preventDeselect.value,
       dir: rootContext.dir.value,
+      minYear: rootContext.minYear.value,
+      maxYear: rootContext.maxYear.value,
     }"
     :model-value="rootContext.modelValue.value"
     :placeholder="rootContext.placeholder.value"

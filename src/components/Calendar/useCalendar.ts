@@ -34,6 +34,8 @@ export type UseCalendarProps = {
   calendarLabel: Ref<string | undefined>;
   nextPage: Ref<((placeholder: DateValue) => DateValue) | undefined>;
   prevPage: Ref<((placeholder: DateValue) => DateValue) | undefined>;
+  minYear: Ref<number>;
+  maxYear: Ref<number>;
 };
 
 export type UseCalendarStateProps = {
@@ -405,10 +407,9 @@ export function useCalendar(props: UseCalendarProps) {
     });
   });
 
-  // TODO: add min and max for years and maybe we should switch to date object here as well for consistency
   const years = computed(() => {
-    const startDate = props.placeholder.value.set({ year: 1875 });
-    const endDate = props.placeholder.value.set({ year: 2100 });
+    const startDate = props.placeholder.value.set({ year: props.minYear.value });
+    const endDate = props.placeholder.value.set({ year: props.maxYear.value });
 
     return createYearRange({ start: startDate, end: endDate });
   });

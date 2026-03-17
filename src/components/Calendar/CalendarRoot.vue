@@ -109,6 +109,10 @@ export interface CalendarRootProps extends PrimitiveProps {
   multiple?: boolean;
   /** Whether or not to disable days outside the current view. */
   disableDaysOutsideCurrentView?: boolean;
+  /** The minimum year displayed in the year overlay */
+  minYear?: number;
+  /** The maximum year displayed in the year overlay */
+  maxYear?: number;
 }
 
 export type CalendarRootEmits = {
@@ -144,6 +148,8 @@ const props = withDefaults(defineProps<CalendarRootProps>(), {
   isDateDisabled: undefined,
   isDateUnavailable: undefined,
   disableDaysOutsideCurrentView: false,
+  minYear: 1900,
+  maxYear: 2100,
 });
 const emits = defineEmits<CalendarRootEmits>();
 defineSlots<{
@@ -187,6 +193,8 @@ const {
   dir: propDir,
   locale: propLocale,
   disableDaysOutsideCurrentView,
+  minYear,
+  maxYear,
 } = toRefs(props);
 
 const { primitiveElement, currentElement: parentElement } =
@@ -249,6 +257,8 @@ const {
   calendarLabel,
   nextPage: propsNextPage,
   prevPage: propsPrevPage,
+  minYear,
+  maxYear,
 });
 
 const { isInvalid, isDateSelected } = useCalendarState({

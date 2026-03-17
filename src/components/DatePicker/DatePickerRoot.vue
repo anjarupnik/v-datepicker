@@ -44,6 +44,8 @@ type DatePickerRootContext = {
   dir: Ref<Direction>;
   step: Ref<DateStep | undefined>;
   closeOnSelect: Ref<boolean>;
+  minYear: Ref<number>;
+  maxYear: Ref<number>;
 };
 
 export type DatePickerRootProps = DateFieldRootProps &
@@ -57,6 +59,8 @@ export type DatePickerRootProps = DateFieldRootProps &
     | "fixedWeeks"
     | "numberOfMonths"
     | "preventDeselect"
+    | "minYear"
+    | "maxYear"
   > & {
     /** Whether or not to close the popover on date select */
     closeOnSelect?: boolean;
@@ -96,6 +100,8 @@ const props = withDefaults(defineProps<DatePickerRootProps>(), {
   isDateDisabled: undefined,
   isDateUnavailable: undefined,
   closeOnSelect: false,
+  minYear: 1900,
+  maxYear: 2100,
 });
 const emits = defineEmits<DatePickerRootEmits & PopoverRootEmits>();
 const {
@@ -123,6 +129,8 @@ const {
   dir: propDir,
   step,
   closeOnSelect,
+  minYear,
+  maxYear,
 } = toRefs(props);
 
 const dir = useDirection(propDir);
@@ -206,6 +214,8 @@ provideDatePickerRootContext({
     placeholder.value = date.copy();
   },
   closeOnSelect,
+  minYear,
+  maxYear,
 });
 </script>
 

@@ -74,6 +74,28 @@ function handleKeydown(e: KeyboardEvent) {
   const sign = rootContext.dir.value === "rtl" ? -1 : 1;
   const currentValue = props.date[props.type];
 
+  function focusItem(value: number) {
+    const candidate = parentElement.querySelector<HTMLElement>(
+      `[data-value='${props.type}-${value}']`,
+    );
+    candidate?.focus();
+    candidate?.scrollIntoView({ block: "nearest" });
+  }
+
+  function shiftFocus(add: number) {
+    let nextValue = currentValue + add;
+
+    if (props.type === "month") {
+      nextValue = ((nextValue - 1 + 12) % 12) + 1;
+    } else {
+      const minYear = years.value[0]!.year;
+      const maxYear = years.value[years.value.length - 1]!.year;
+      nextValue = Math.max(minYear, Math.min(nextValue, maxYear));
+    }
+
+    focusItem(nextValue);
+  }
+
   switch (e.code) {
     case kbd.ARROW_RIGHT:
       shiftFocus(sign);
@@ -88,19 +110,14 @@ function handleKeydown(e: KeyboardEvent) {
       shiftFocus(itemsPerRow);
       break;
     case kbd.HOME: {
-      const indexInGrid =
-        props.type === "month"
-          ? currentValue - 1
-          : currentValue - years.value[0]!.year;
-      shiftFocus(-(indexInGrid % itemsPerRow));
+      const firstValue = props.type === "month" ? 1 : years.value[0]!.year;
+      focusItem(firstValue);
       break;
     }
     case kbd.END: {
-      const indexInGrid =
-        props.type === "month"
-          ? currentValue - 1
-          : currentValue - years.value[0]!.year;
-      shiftFocus(itemsPerRow - 1 - (indexInGrid % itemsPerRow));
+      const lastValue =
+        props.type === "month" ? 12 : years.value[years.value.length - 1]!.year;
+      focusItem(lastValue);
       break;
     }
     case kbd.ENTER:
@@ -109,24 +126,6 @@ function handleKeydown(e: KeyboardEvent) {
         rootContext.onDateChange(props.date);
         closeOverlay();
       }
-  }
-
-  function shiftFocus(add: number) {
-    let nextValue = currentValue + add;
-
-    if (props.type === "month") {
-      nextValue = ((nextValue - 1 + 12) % 12) + 1;
-    } else {
-      const minYear = years.value[0]!.year;
-      const maxYear = years.value[years.value.length - 1]!.year;
-      nextValue = Math.max(minYear, Math.min(nextValue, maxYear));
-    }
-
-    const candidate = parentElement.querySelector<HTMLElement>(
-      `[data-value='${props.type}-${nextValue}']`,
-    );
-    candidate?.focus();
-    candidate?.scrollIntoView({ block: "nearest" });
   }
 }
 </script>
