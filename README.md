@@ -62,10 +62,53 @@ import { DatePicker } from '@rupe/v-datepicker'
       <DatePicker.Calendar v-slot="{ weekDays, grid }">
         <DatePicker.Header class="flex items-center justify-between mb-4">
           <DatePicker.Prev class="p-1 hover:bg-gray-100 rounded">⬅️</DatePicker.Prev>
+          
           <DatePicker.Heading class="font-bold flex gap-1">
-             <DatePicker.MonthHeading />
-             <DatePicker.YearHeading />
+            <!-- Month Heading & Overlay -->
+            <DatePicker.MonthHeading class="hover:bg-gray-100 rounded px-1 cursor-pointer" />
+            <DatePicker.MonthYearOverlay type="month" class="bg-white rounded-lg shadow-lg p-2" :items-per-row="3">
+              <template #default="{ months }">
+                <DatePicker.Grid class="w-full">
+                  <DatePicker.GridBody>
+                    <DatePicker.GridRow v-for="(row, index) in months" :key="index" class="flex gap-1 mb-1">
+                      <DatePicker.Cell v-for="month in row" :key="month.monthName" :date="month" class="flex-1">
+                        <DatePicker.OverlayItem
+                          :date="month"
+                          type="month"
+                          class="w-full p-2 text-center rounded hover:bg-blue-50 data-[selected]:bg-blue-600 data-[selected]:text-white"
+                        >
+                          {{ month.monthName }}
+                        </DatePicker.OverlayItem>
+                      </DatePicker.Cell>
+                    </DatePicker.GridRow>
+                  </DatePicker.GridBody>
+                </DatePicker.Grid>
+              </template>
+            </DatePicker.MonthYearOverlay>
+
+            <!-- Year Heading & Overlay -->
+            <DatePicker.YearHeading class="hover:bg-gray-100 rounded px-1 cursor-pointer" />
+            <DatePicker.MonthYearOverlay type="year" class="bg-white rounded-lg shadow-lg p-2 h-64 overflow-y-auto" :items-per-row="3">
+              <template #default="{ years }">
+                <DatePicker.Grid class="w-full">
+                  <DatePicker.GridBody>
+                    <DatePicker.GridRow v-for="(row, index) in years" :key="index" class="flex gap-1 mb-1">
+                      <DatePicker.Cell v-for="year in row" :key="year.year" :date="year" class="flex-1">
+                        <DatePicker.OverlayItem
+                          :date="year"
+                          type="year"
+                          class="w-full p-2 text-center rounded hover:bg-blue-50 data-[selected]:bg-blue-600 data-[selected]:text-white"
+                        >
+                          {{ year.year }}
+                        </DatePicker.OverlayItem>
+                      </DatePicker.Cell>
+                    </DatePicker.GridRow>
+                  </DatePicker.GridBody>
+                </DatePicker.Grid>
+              </template>
+            </DatePicker.MonthYearOverlay>
           </DatePicker.Heading>
+
           <DatePicker.Next class="p-1 hover:bg-gray-100 rounded">➡️</DatePicker.Next>
         </DatePicker.Header>
         

@@ -26,8 +26,20 @@ const dataValue = computed(() => `${props.type}-${props.date[props.type]}`);
 const { primitiveElement, currentElement } = usePrimitiveElement();
 
 const isFocusedDate = computed(() => {
-  if (props.type === "month")
+  const selected = rootContext.modelValue.value;
+  const selectedDate = Array.isArray(selected)
+    ? selected[selected.length - 1]
+    : selected;
+
+  if (selectedDate) {
+    if (props.type === "month") return selectedDate.month === props.date.month;
+    return selectedDate.year === props.date.year;
+  }
+
+  if (props.type === "month") {
     return rootContext.currentMonth.value === props.date.monthName;
+  }
+
   return rootContext.currentYear.value === props.date.year.toString();
 });
 
