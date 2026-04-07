@@ -97,7 +97,9 @@ import { DatePicker } from '@rupe/v-datepicker'
 
 ## Playground
 
-The repository includes a playground project built with **Nuxt** and **Tailwind CSS** to test the library locally.
+You can check out the package in action on [StackBlitz](https://stackblitz.com/edit/nuxt-starter-tjmzbch9?file=package.json).
+
+The repository also includes a playground project built with **Nuxt** and **Tailwind CSS** to test the library locally.
 
 ### Running the Playground
 
